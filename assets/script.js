@@ -21,8 +21,8 @@ const bannerImg = document.querySelector('.banner-img');
 const bannerTagLine = document.querySelector('#banner p');
 const dots = document.querySelectorAll('.dot');
 
-const leftArrow = document.querySelector('.prev');
-const rightArrow = document.querySelector('.next');
+const leftArrow = document.querySelector('.arrow_left');
+const rightArrow = document.querySelector('.arrow_right');
 
 let currentIndex = 0;
 
@@ -34,6 +34,13 @@ rightArrow.addEventListener('click', () => {
 	console.log(currentIndex);
 	bannerImg.src = `./assets/images/slideshow/${slides[currentIndex].image}`;
 	bannerTagLine.innerHTML = slides[currentIndex].tagLine;
+	dots.forEach((dot, index) => {
+		if (index === currentIndex) {
+			dot.classList.add('dot_selected');
+		} else {
+			dot.classList.remove('dot_selected');
+		}
+	});
 });
 
 leftArrow.addEventListener('click', () => {
@@ -44,7 +51,11 @@ leftArrow.addEventListener('click', () => {
 	console.log(currentIndex);
 	bannerImg.src = `./assets/images/slideshow/${slides[currentIndex].image}`;
 	bannerTagLine.innerHTML = slides[currentIndex].tagLine;
+	dots.forEach((dot, index) => {
+		if (index === currentIndex) {
+			dot.classList.add('dot_selected');
+		} else {
+			dot.classList.remove('dot_selected');
+		}
+	});
 });
-
-
-
