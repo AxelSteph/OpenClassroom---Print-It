@@ -19,21 +19,35 @@ const slides = [
 
 const bannerImg = document.querySelector('.banner-img');
 const bannerTagLine = document.querySelector('#banner p');
-const dots = document.querySelectorAll('.dot');
 
 const leftArrow = document.querySelector('.arrow_left');
 const rightArrow = document.querySelector('.arrow_right');
 
 let currentIndex = 0;
 
-rightArrow.addEventListener('click', () => {
-	currentIndex += 1;
-	if (currentIndex == slides.length) {
-		currentIndex = 0;
-	}
+slides.forEach((slide, index) => {
+		const dot = document.createElement('span');
+		dot.classList.add('dot');
+		if (index === 0) {
+			dot.classList.add('dot_selected');
+		}			
+
+		dot.addEventListener('click', () => {
+			currentIndex = index;
+			updateSlide();
+		});
+
+		document.querySelector('.dots').appendChild(dot);
+});
+
+
+const dots = document.querySelectorAll('.dot');
+
+function updateSlide() {
 	console.log(currentIndex);
 	bannerImg.src = `./assets/images/slideshow/${slides[currentIndex].image}`;
 	bannerTagLine.innerHTML = slides[currentIndex].tagLine;
+
 	dots.forEach((dot, index) => {
 		if (index === currentIndex) {
 			dot.classList.add('dot_selected');
@@ -41,6 +55,14 @@ rightArrow.addEventListener('click', () => {
 			dot.classList.remove('dot_selected');
 		}
 	});
+}
+
+rightArrow.addEventListener('click', () => {
+	currentIndex += 1;
+	if (currentIndex == slides.length) {
+		currentIndex = 0;
+	}
+	updateSlide();
 });
 
 leftArrow.addEventListener('click', () => {
@@ -48,14 +70,5 @@ leftArrow.addEventListener('click', () => {
 	if (currentIndex < 0) {
 		currentIndex = slides.length - 1;
 	}
-	console.log(currentIndex);
-	bannerImg.src = `./assets/images/slideshow/${slides[currentIndex].image}`;
-	bannerTagLine.innerHTML = slides[currentIndex].tagLine;
-	dots.forEach((dot, index) => {
-		if (index === currentIndex) {
-			dot.classList.add('dot_selected');
-		} else {
-			dot.classList.remove('dot_selected');
-		}
-	});
+	updateSlide();
 });
